@@ -53,9 +53,9 @@ class _LoginPageState extends State<LoginPage> {
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Colors.red,
-                Colors.blue,
-                Colors.white,
+                Color(0xFF0288D1), // Deep Ocean Blue
+                Color(0xFF4FC3F7), // Light Blue
+                Color(0xFFFFF9C4), // Soft Sunlight
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -111,8 +111,19 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF0288D1),
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
                         onPressed: _login,
-                        child: const Text('Masuk'),
+                        child: const Text(
+                          'Masuk',
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                   ],
