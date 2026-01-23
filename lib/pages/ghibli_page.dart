@@ -1,7 +1,7 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import '../models/ghibli_film.dart';
+import '../services/ghibli_service.dart';
 import 'ghibli_detail_page.dart';
 
 class GhibliPage extends StatefulWidget {
@@ -12,21 +12,13 @@ class GhibliPage extends StatefulWidget {
 }
 
 class _GhibliPageState extends State<GhibliPage> {
-  Future<List<dynamic>>? _filmsFuture;
+  final GhibliService _ghibliService = GhibliService();
+  Future<List<GhibliFilm>>? _filmsFuture;
 
   @override
   void initState() {
     super.initState();
-    _filmsFuture = _fetchFilms();
-  }
-
-  Future<List<dynamic>> _fetchFilms() async {
-    final response = await http.get(Uri.parse('https://ghibliapi.vercel.app/films'));
-    if (response.statusCode == 200) {
-      return json.decode(response.body);
-    } else {
-      throw Exception('Failed to load films');
-    }
+    _filmsFuture = _ghibliService.fetchFilms();
   }
 
   @override
@@ -54,7 +46,7 @@ class _GhibliPageState extends State<GhibliPage> {
         ),
         centerTitle: true,
       ),
-      body: FutureBuilder<List<dynamic>>(
+      body: FutureBuilder<List<GhibliFilm>>(
         future: _filmsFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -83,13 +75,13 @@ class _GhibliPageState extends State<GhibliPage> {
     );
   }
 
-  Widget _buildFilmCard(BuildContext context, Map<String, dynamic> film) {
+  Widget _buildFilmCard(BuildContext context, GhibliFilm film) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) => GhibliDetailPage(film: film),
+            builder: (_) => GhibliDetailPage(film: film.toJson()),
           ),
         );
       },
@@ -111,9 +103,9 @@ class _GhibliPageState extends State<GhibliPage> {
             ClipRRect(
               borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
               child: Hero(
-                tag: film['id'],
+                tag: film.id,
                 child: Image.network(
-                  film['image'],
+                  film.image,
                   fit: BoxFit.cover,
                   height: 180,
                   width: double.infinity,
@@ -128,7 +120,7 @@ class _GhibliPageState extends State<GhibliPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    film['title'],
+                    film.title,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
@@ -143,7 +135,7 @@ class _GhibliPageState extends State<GhibliPage> {
                       const Icon(Icons.star, size: 16, color: Colors.amber),
                       const SizedBox(width: 4),
                       Text(
-                        film['rt_score'] ?? 'N/A',
+                        'N/A',
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
@@ -152,7 +144,7 @@ class _GhibliPageState extends State<GhibliPage> {
                       ),
                       const Spacer(),
                       Text(
-                        film['release_date'],
+                        film.releaseDate,
                         style: const TextStyle(
                           fontSize: 12,
                           color: Color(0xFF9CA3AF),
