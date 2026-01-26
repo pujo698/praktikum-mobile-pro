@@ -26,19 +26,19 @@ class CatatanKuPro extends StatelessWidget {
       title: 'CatatanKu Pro',
       theme: ThemeData(
         textTheme: GoogleFonts.poppinsTextTheme(),
-        scaffoldBackgroundColor: const Color(0xFFFDFCF0), // Warm off-white
+        scaffoldBackgroundColor: const Color(0xFFFDFCF0), 
         appBarTheme: const AppBarTheme(
           backgroundColor: Color(0xFF0288D1),
           foregroundColor: Colors.white,
           centerTitle: true,
         ),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          backgroundColor: Color(0xFFFFA000), // Sunlight Gold
+          backgroundColor: Color(0xFFFFA000), 
           foregroundColor: Colors.white,
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF0288D1), // Ocean Blue
+            backgroundColor: const Color(0xFF0288D1), 
             foregroundColor: Colors.white,
           ),
         ),

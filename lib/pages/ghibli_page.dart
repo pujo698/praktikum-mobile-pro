@@ -27,7 +27,7 @@ class _GhibliPageState extends State<GhibliPage> {
       backgroundColor: const Color(0xFFF3F4F6),
       appBar: AppBar(
         title: const Text(
-          'Studio Ghibli Collection',
+          'Film Studio Ghibli',
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
         backgroundColor: Colors.transparent,
